@@ -1,11 +1,13 @@
 package com.scys.friendbox.web;
 
-import com.scys.friendbox.dal.dataobject.UserDO;
-import com.scys.friendbox.dal.datainterface.UserDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.scys.friendbox.utils.error.Result;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dx
@@ -14,28 +16,68 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BaseController {
 
-    @Autowired
-    private UserDAO userDAO;
+    /**
+     * 默认页面提示语key
+     */
+    protected static final String SUCCESS = "success";
 
-    @GetMapping("/add")
-    public String add() {
-        UserDO userDO = new UserDO();
-        userDO.setId(1L);
-        userDO.setName("test1");
-        Object ret = userDAO.save(userDO);
-        return ret.toString();
+    /**
+     * 默认页面提示语DATA
+     */
+    protected static final String DATA = "data";
+
+    /**
+     * 默认页面提示语MESSAGE
+     */
+    protected static final String MESSAGE = "message";
+
+    /**
+     * 前端接口:总记录数为itemsCount
+     */
+    protected static final String ITEMS_COUNT = "itemsCount";
+
+    /**
+     * 前端接口:总记录数为itemsPerPage
+     */
+    protected static final String ITEMS_PER_PAGE = "itemsPerPage";
+
+    /**
+     * 前端接口:当前页为currentPage
+     */
+    protected static final String CURRENT_PAGE = "currentPage";
+
+    /**
+     * 前端接口:总页数数为totalPages
+     */
+    protected static final String TOTAL_PAGES = "totalPages";
+
+    /**
+     * 解析query string
+     *
+     * @param request http请求
+     * @return 参数结果
+     */
+    protected final Map<String, Object> formatQueryPara(HttpServletRequest request) {
+
+        //参数初始化
+        Map<String, Object> requestParams = new HashMap<>();
+
+        Enumeration<String> enu = request.getParameterNames();
+        while (enu.hasMoreElements()) {
+            String paraName = enu.nextElement();
+            requestParams.put(paraName, request.getParameter(paraName));
+        }
+
+        return requestParams;
     }
 
-    @GetMapping("/find/{name}")
-    public String update(@PathVariable String name) {
-        Object ret = userDAO.getUserByName(name);
-        return ret.toString();
-    }
-
-    @GetMapping("/update/{id}/{name}")
-    public String update(@PathVariable String name, @PathVariable Long id) {
-        Object ret = userDAO.setNameById(id, name);
-        return ret.toString();
+    protected void saveResult(Result result, ModelMap modelMap) {
+        modelMap.put(SUCCESS, result.isSuccess());
+        if (result.isSuccess()) {
+            modelMap.put(DATA, result.getResultObj());
+        } else if (result.getErrorContext() != null) {
+            modelMap.put(MESSAGE, result.getErrorContext() != null ? result.getErrorContext() : "");
+        }
     }
 
 }

@@ -1,42 +1,46 @@
 package com.scys.friendbox.web.makefriends;
 
-import com.scys.friendbox.dal.datainterface.UserDAO;
-import com.scys.friendbox.dal.dataobject.UserDO;
+//import com.alibaba.fastjson.JSONObject;
+import com.scys.friendbox.biz.makefriends.FriendBoxManager;
+import com.scys.friendbox.biz.makefriends.model.BoxModel;
+import com.scys.friendbox.utils.error.Result;
 import com.scys.friendbox.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author dx
  * @version : BaseController.java, v 0.1 2021年10月10日 9:49 下午 dx Exp $
  */
 @RestController
+@RequestMapping("/friendbox")
 public class FriendBoxController extends BaseController {
 
     @Autowired
-    private UserDAO userDAO;
+    private FriendBoxManager friendBoxManager;
 
-    @GetMapping("/add")
-    public String add() {
-        UserDO userDO = new UserDO();
-        userDO.setId(1L);
-        userDO.setName("test1");
-        Object ret = userDAO.save(userDO);
-        return ret.toString();
+    @PostMapping("/createBox.json")
+    public ModelMap createBox(@RequestBody BoxModel boxModel) {
+    //public ModelMap createBox(@RequestBody String data) {
+    //    BoxModel boxModel = JSONObject.parseObject(data, BoxModel.class);
+        Result<Long> ret = friendBoxManager.createBox(boxModel);
+        ModelMap modelMap = new ModelMap();
+        saveResult(ret, modelMap);
+        return modelMap;
     }
 
-    @GetMapping("/find/{name}")
-    public String update(@PathVariable String name) {
-        Object ret = userDAO.getUserByName(name);
-        return ret.toString();
+    @GetMapping("/openBox.json")
+    public ModelMap openBox() {
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("success", true);
+        modelMap.put("data", "ok");
+        return modelMap;
     }
 
-    @GetMapping("/update/{id}/{name}")
-    public String update(@PathVariable String name, @PathVariable Long id) {
-        Object ret = userDAO.setNameById(id, name);
-        return ret.toString();
+    @GetMapping("/openedHistory.json")
+    public String openedHistory() {
+        return "hello";
     }
 
 }

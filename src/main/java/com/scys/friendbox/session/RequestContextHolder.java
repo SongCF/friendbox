@@ -1,4 +1,4 @@
-package com.scys.friendbox.utils.context;
+package com.scys.friendbox.session;
 
 /**
  * @author dx

@@ -1,4 +1,4 @@
-package com.scys.friendbox.utils.context;
+package com.scys.friendbox.session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class RequestContext {
     private boolean             bodyContainsParameters;
     private HttpServletRequest  httpServletRequest;
     private HttpServletResponse httpServletResponse;
-    private AuthToken authToken;
+    private AuthToken           authToken;
 
     private String              invokeId;
     private Map<String, String> bizOpLogInfo = new HashMap();

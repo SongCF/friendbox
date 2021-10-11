@@ -1,5 +1,8 @@
 package com.scys.friendbox.utils.context;
 
+import com.scys.friendbox.session.OperatorDTO;
+import com.scys.friendbox.session.RequestContextHolder;
+
 public class LoginUserUtil {
 
     public static final String SYSTEM_USER_ID = "system";

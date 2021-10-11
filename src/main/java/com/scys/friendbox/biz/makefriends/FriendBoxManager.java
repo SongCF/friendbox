@@ -29,5 +29,5 @@ public interface FriendBoxManager {
      * 获取我抽取的盲盒历史
      * @return
      */
-    Result<List<BoxModel>> getOpenedBoxHistory(int pageNum, int pageSize);
+    Result<List<BoxModel>> queryOpenedBoxHistory(int pageNum, int pageSize);
 }

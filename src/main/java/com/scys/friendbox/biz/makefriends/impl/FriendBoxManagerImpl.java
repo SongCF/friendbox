@@ -55,7 +55,7 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
     }
 
     @Override
-    public Result<List<BoxModel>> getOpenedBoxHistory(int pageNum, int pageSize) {
+    public Result<List<BoxModel>> queryOpenedBoxHistory(int pageNum, int pageSize) {
         return null;
     }
 }

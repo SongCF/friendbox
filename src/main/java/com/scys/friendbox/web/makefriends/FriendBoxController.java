@@ -1,13 +1,15 @@
 package com.scys.friendbox.web.makefriends;
 
-//import com.alibaba.fastjson.JSONObject;
 import com.scys.friendbox.biz.makefriends.FriendBoxManager;
 import com.scys.friendbox.biz.makefriends.model.BoxModel;
+import com.scys.friendbox.dal.params.BoxQuery;
 import com.scys.friendbox.utils.error.Result;
 import com.scys.friendbox.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author dx
@@ -22,8 +24,6 @@ public class FriendBoxController extends BaseController {
 
     @PostMapping("/createBox.json")
     public ModelMap createBox(@RequestBody BoxModel boxModel) {
-    //public ModelMap createBox(@RequestBody String data) {
-    //    BoxModel boxModel = JSONObject.parseObject(data, BoxModel.class);
         Result<Long> ret = friendBoxManager.createBox(boxModel);
         ModelMap modelMap = new ModelMap();
         saveResult(ret, modelMap);
@@ -31,16 +31,19 @@ public class FriendBoxController extends BaseController {
     }
 
     @GetMapping("/openBox.json")
-    public ModelMap openBox() {
+    public ModelMap openBox(BoxQuery boxQuery) {
+        Result<BoxModel> ret = friendBoxManager.openOneBox(boxQuery);
         ModelMap modelMap = new ModelMap();
-        modelMap.put("success", true);
-        modelMap.put("data", "ok");
+        saveResult(ret, modelMap);
         return modelMap;
     }
 
     @GetMapping("/openedHistory.json")
-    public String openedHistory() {
-        return "hello";
+    public ModelMap openedHistory(int pageNum, int pageSize) {
+        Result<List<BoxModel>> ret = friendBoxManager.queryOpenedBoxHistory(pageNum, pageSize);
+        ModelMap modelMap = new ModelMap();
+        saveResult(ret, modelMap);
+        return modelMap;
     }
 
 }

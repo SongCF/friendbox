@@ -21,7 +21,6 @@ public class BaseController {
     public String add() {
         UserDO userDO = new UserDO();
         userDO.setId(1L);
-        userDO.setAge(11);
         userDO.setName("test1");
         Object ret = userDAO.save(userDO);
         return ret.toString();

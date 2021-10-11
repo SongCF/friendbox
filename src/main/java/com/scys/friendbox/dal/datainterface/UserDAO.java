@@ -1,13 +1,9 @@
-/**
- * Alipay.com Inc. Copyright (c) 2004-2021 All Rights Reserved.
- */
 package com.scys.friendbox.dal.datainterface;
 
 import com.scys.friendbox.dal.dataobject.UserDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
@@ -18,8 +14,6 @@ import javax.transaction.Transactional;
 public interface UserDAO extends JpaRepository<UserDO, Long> {
 
     //自定义SQL ： https://www.jianshu.com/p/8b61ef1f01bf
-
-    //UserDO findByName(String name);
 
     @Query("select t from UserDO t where t.name=?1")
     UserDO getUserByName(String name);

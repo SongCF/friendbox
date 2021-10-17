@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.PathMatcher;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class LoginCheckFilter implements Filter {
         AuthToken authToken = currentRequestContext.getAuthToken();
 
         // 未登录、不在白名单-->抛出异常
-        if ((authToken == null) && (!isInTntInstWhitePageList(currentRequestContext))) {
+        if ((authToken == null) && (!isInTntInstWhitePageList((HttpServletRequest) request))) {
             throwUserNotLoginExp();
         }
 
@@ -51,30 +52,30 @@ public class LoginCheckFilter implements Filter {
     /**
      * 当前请求是否属于租户白名单页面
      *
-     * @param currentRequestContext
+     * @param request
      * @return
      */
-    protected boolean isInTntInstWhitePageList(RequestContext currentRequestContext) {
-        return isInWhitePageList(currentRequestContext, loginCheckWhiteList);
+    protected boolean isInTntInstWhitePageList(HttpServletRequest request) {
+        return isInWhitePageList(request, loginCheckWhiteList);
     }
 
     /**
      * 当前请求是否属于白名单页面
      *
-     * @param currentRequestContext
+     * @param request
      */
-    private boolean isInWhitePageList(RequestContext currentRequestContext, List<String> whitePageList) {
+    private boolean isInWhitePageList(HttpServletRequest request, List<String> whitePageList) {
         //进行白名单地址的配置
         if (CollectionUtils.isEmpty(whitePageList)) {
             return false;
         }
 
         boolean result = false;
-        String requestUri = currentRequestContext.getRequestUri();
+        String requestUri = request.getRequestURI();
         for (String whitePage : whitePageList) {
             if (StringUtils.isNotBlank(whitePage) && isRequestEqual(requestUri, whitePage)) {
-                //log
                 result = true;
+                break;
             }
         }
 
@@ -114,6 +115,6 @@ public class LoginCheckFilter implements Filter {
     }
 
     public static void throwUserNotLoginExp() {
-        throw new RuntimeException("The current request resources doesn't login");
+        throw new RuntimeException("NOT LOGIN (The current request resources doesn't login)");
     }
 }

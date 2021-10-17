@@ -1,6 +1,7 @@
 package com.scys.friendbox.session.authtoken;
 
 import com.scys.friendbox.session.AuthToken;
+import com.scys.friendbox.session.JsonMapper;
 import com.scys.friendbox.session.RequestContext;
 import com.scys.friendbox.session.RequestContextHolder;
 import org.apache.commons.lang.ArrayUtils;
@@ -85,7 +86,9 @@ public class AuthTokenInitFilter implements Filter {
             //本地session
             if (session_store != null && session_store.equalsIgnoreCase(SESSION_STORE_COOKIE)) {
                 Cookie cookie = getCookie(request, sessionID);
-                authToken = (AuthToken) null;
+                if (cookie != null) {
+                    authToken = JsonMapper.fromJson(cookie.getValue(), AuthToken.class);
+                }
                 //if (authToken != null && authToken.getLoginUser() != null) {
                 //    LogUtil.info(logger, "read authToken from session. loginUserId=" + authToken.getLoginUser().getId());
                 //}

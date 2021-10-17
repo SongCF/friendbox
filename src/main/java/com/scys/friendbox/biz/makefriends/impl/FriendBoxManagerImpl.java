@@ -13,7 +13,6 @@ import com.scys.friendbox.utils.template.TransTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +38,12 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
         Result<Long> result = new Result<>();
 
         transTemplate.execute(result, new BizEventBO(), new HandleCallback() {
+
+            @Override
+            public void checkParams() {
+
+            }
+
             @Override
             public void process() {
                 Optional<UserDO> user = userDAO.findById(1L);

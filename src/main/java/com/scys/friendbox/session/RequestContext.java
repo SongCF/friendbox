@@ -3,7 +3,6 @@ package com.scys.friendbox.session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,9 +14,7 @@ public class RequestContext {
     private String              requestUri;
     private String              referUri;
     private String              method;
-    private List<String>        requestMappingParams;
     private Map<String, ?>      req;
-    private boolean             bodyContainsParameters;
     private HttpServletRequest  httpServletRequest;
     private HttpServletResponse httpServletResponse;
     private AuthToken           authToken;
@@ -28,13 +25,11 @@ public class RequestContext {
     public RequestContext() {
     }
 
-    public RequestContext(String appName, String requestUri, String referUri, String method, List<String> requestMappingParams,
-                          Map<String, ?> req) {
+    public RequestContext(String appName, String requestUri, String referUri, String method, Map<String, ?> req) {
         this.appName = appName;
         this.requestUri = requestUri;
         this.referUri = referUri;
         this.method = method;
-        this.requestMappingParams = requestMappingParams;
         this.req = req;
     }
 
@@ -55,10 +50,6 @@ public class RequestContext {
         return this.req;
     }
 
-    public List<String> getRequestMappingParams() {
-        return this.requestMappingParams;
-    }
-
     public String getInvokeId() {
         return this.invokeId;
     }
@@ -77,14 +68,6 @@ public class RequestContext {
 
     public String getAppName() {
         return this.appName;
-    }
-
-    public boolean isBodyContainsParameters() {
-        return this.bodyContainsParameters;
-    }
-
-    public void setBodyContainsParameters(boolean bodyContainsParameters) {
-        this.bodyContainsParameters = bodyContainsParameters;
     }
 
     public HttpServletResponse getHttpServletResponse() {

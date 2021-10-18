@@ -20,7 +20,7 @@ import java.util.*;
  * 登录检查
  */
 @Component
-@Order(20002)
+@Order(30001)
 public class LoginCheckFilter implements Filter {
 
     /**

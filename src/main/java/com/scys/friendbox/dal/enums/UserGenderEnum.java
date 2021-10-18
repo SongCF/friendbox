@@ -2,8 +2,6 @@ package com.scys.friendbox.dal.enums;
 
 /**
  *
- * @author dx
- * @version : UserGenderEnum.java, v 0.1 2021年10月11日 3:22 下午 dx Exp $
  */
 public enum UserGenderEnum {
     MALE(1, "男"),
@@ -15,6 +13,20 @@ public enum UserGenderEnum {
     UserGenderEnum(int code, String dsc) {
         this.code = code;
         this.dsc = dsc;
+    }
+
+    /**
+     * 获取
+     * @param val
+     * @return
+     */
+    public static UserGenderEnum getByCode(int val) {
+        for (UserGenderEnum userGenderEnum : UserGenderEnum.values()) {
+            if (userGenderEnum.getCode() == val) {
+                return userGenderEnum;
+            }
+        }
+        return null;
     }
 
     public int getCode() {

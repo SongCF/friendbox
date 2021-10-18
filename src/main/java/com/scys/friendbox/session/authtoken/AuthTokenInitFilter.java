@@ -1,9 +1,6 @@
 package com.scys.friendbox.session.authtoken;
 
-import com.scys.friendbox.session.AuthToken;
-import com.scys.friendbox.session.JsonMapper;
-import com.scys.friendbox.session.RequestContext;
-import com.scys.friendbox.session.RequestContextHolder;
+import com.scys.friendbox.session.*;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  * 初始化AuthToken的filter
  */
 @Component
-@Order(20001)
+@Order(20011)
 public class AuthTokenInitFilter implements Filter {
 
     @Value("${session.cookieName}")
@@ -46,6 +43,9 @@ public class AuthTokenInitFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         //初始化token
         initAuthToken(request, response);
+
+        //[TESTCODE] TODO delete
+        setTestAuthToken();
 
         filterChain.doFilter(request, response);
     }
@@ -159,6 +159,20 @@ public class AuthTokenInitFilter implements Filter {
         }
 
         return null;
+    }
+
+    /**
+     * 添加测试租户到上下文
+     */
+    private void setTestAuthToken() {
+        RequestContext requestContext = RequestContextHolder.getCurrentRequestContext();
+        OperatorDTO operatorDTO = RequestContextHolder.getWithAnonymousUser();
+        operatorDTO.setId("1");
+        operatorDTO.setName("testName");
+        AuthToken authToken = new AuthToken();
+        authToken.setLoginUser(operatorDTO);
+        requestContext.setAuthToken(authToken);
+        RequestContextHolder.setCurrentRequestContext(requestContext);
     }
 
 }

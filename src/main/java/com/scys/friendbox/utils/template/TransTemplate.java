@@ -1,6 +1,7 @@
 package com.scys.friendbox.utils.template;
 
 import com.scys.friendbox.utils.error.Result;
+import com.scys.friendbox.utils.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -75,8 +76,13 @@ public class TransTemplate {
                 action.setEventAfterBiz();
             }
 
+        } catch (BizException be) {
+            //LoggerUtil
+            result.setSuccess(false);
+            result.setMessage(be.getMessage());
         } catch (Exception e) {
             result.setSuccess(false);
+            result.setMessage(e.toString());
         } finally {
             //设置本次服务响应时长
             long endTime = System.currentTimeMillis();

@@ -75,8 +75,8 @@ public class BaseController {
         modelMap.put(SUCCESS, result.isSuccess());
         if (result.isSuccess()) {
             modelMap.put(DATA, result.getResultObj());
-        } else if (result.getErrorContext() != null) {
-            modelMap.put(MESSAGE, result.getErrorContext() != null ? result.getErrorContext() : "");
+        } else if (result.getMessage() != null) {
+            modelMap.put(MESSAGE, result.getMessage() != null ? result.getMessage() : "");
         }
     }
 

@@ -11,14 +11,16 @@ import java.io.Serializable;
  */
 public class Result<T> implements Serializable {
     private boolean success;
+    private String  message;
     private String  errorContext;
     private T       resultObj;
 
     public Result() {
     }
 
-    public Result(boolean success, String errorContext, T resultObj) {
+    public Result(boolean success, String message, String errorContext, T resultObj) {
         this.success = success;
+        this.message = message;
         this.errorContext = errorContext;
         this.resultObj = resultObj;
     }
@@ -29,6 +31,14 @@ public class Result<T> implements Serializable {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getErrorContext() {

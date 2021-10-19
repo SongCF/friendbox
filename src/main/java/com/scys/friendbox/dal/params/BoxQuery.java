@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @author dx
- * @version : BoxQuery.java, v 0.1 2021年10月11日 4:26 下午 dx Exp $
+ * 盲盒查询参数
  */
 @Data
 public class BoxQuery {

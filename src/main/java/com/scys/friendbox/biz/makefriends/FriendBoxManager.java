@@ -7,9 +7,7 @@ import com.scys.friendbox.utils.error.Result;
 import java.util.List;
 
 /**
- *
- * @author dx
- * @version : FriendBoxManager.java, v 0.1 2021年10月11日 3:45 下午 dx Exp $
+ * 盲盒管理
  */
 public interface FriendBoxManager {
 

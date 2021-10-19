@@ -1,8 +1,7 @@
 package com.scys.friendbox.session;
 
 /**
- * @author dx
- * @version : RequestContextHolder.java, v 0.1 2021年10月11日 4:04 下午 dx Exp $
+ * http请求线程上下文
  */
 public class RequestContextHolder {
 

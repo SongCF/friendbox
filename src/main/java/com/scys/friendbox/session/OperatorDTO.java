@@ -8,8 +8,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * @author dx
- * @version : OperatorDTO.java, v 0.1 2021年10月11日 4:13 下午 dx Exp $
+ * 用户信息
  */
 public class OperatorDTO implements Serializable {
     private String       id;

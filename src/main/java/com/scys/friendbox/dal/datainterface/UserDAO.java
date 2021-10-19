@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.persistence.LockModeType;
 
 /**
- * @author dx
- * @version : UserRepository.java, v 0.1 2021年10月10日 10:27 下午 dx Exp $
+ * 用户数据
  */
 public interface UserDAO extends JpaRepository<UserDO, Long> {
 
@@ -23,6 +22,7 @@ public interface UserDAO extends JpaRepository<UserDO, Long> {
     @Query("update UserDO t set t.cnt=?2 where t.id=?1")
     int updateCntById(Long id, Integer cnt);
 
+    //https://blog.csdn.net/Pure_Eyes/article/details/99675262
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select t from UserDO t where id = ?1")
     UserDO lockById(Long id);

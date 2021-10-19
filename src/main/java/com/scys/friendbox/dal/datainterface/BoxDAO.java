@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 /**
- * @author dx
- * @version : UserRepository.java, v 0.1 2021年10月10日 10:27 下午 dx Exp $
+ * 盲盒数据
  */
 public interface BoxDAO extends JpaRepository<BoxDO, Long> {
 

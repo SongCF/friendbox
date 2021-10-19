@@ -6,8 +6,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.io.Serializable;
 
 /**
- * @author dx
- * @version : Result.java, v 0.1 2021年10月11日 3:56 下午 dx Exp $
+ * 通用biz层返回对象
  */
 public class Result<T> implements Serializable {
     private boolean success;

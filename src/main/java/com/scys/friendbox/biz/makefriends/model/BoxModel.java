@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- *
+ * 盲盒
  */
 @Data
 public class BoxModel {

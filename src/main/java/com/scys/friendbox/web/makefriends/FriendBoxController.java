@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author dx
- * @version : BaseController.java, v 0.1 2021年10月10日 9:49 下午 dx Exp $
+ * 盲盒controller
  */
 @RestController
 @RequestMapping("/friendbox")

@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * @author dx
- * @version : AuthToken.java, v 0.1 2021年10月11日 4:13 下午 dx Exp $
+ * 登录信令
  */
 public class AuthToken implements Serializable {
     private OperatorDTO            loginUser;

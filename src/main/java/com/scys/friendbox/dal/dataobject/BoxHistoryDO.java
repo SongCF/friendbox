@@ -7,9 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- *
- * @author dx
- * @version : User.java, v 0.1 2021年10月10日 9:51 下午 dx Exp $
+ * 历史盲盒模型
  */
 @Data
 @Entity

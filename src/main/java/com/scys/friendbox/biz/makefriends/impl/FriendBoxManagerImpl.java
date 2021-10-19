@@ -23,9 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- *
- * @author dx
- * @version : FriendBoxManager.java, v 0.1 2021年10月11日 3:45 下午 dx Exp $
+ * 盲盒管理
  */
 @Service
 public class FriendBoxManagerImpl implements FriendBoxManager {
@@ -50,7 +48,7 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
         Result<Long> result = new Result<>();
 
         transTemplate.execute(result, new BizEventBO(), new HandleCallback() {
-
+            long userId;
             UserDO userDO;
 
             @Override
@@ -69,27 +67,29 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
                 //检查用户信息
                 String userIdStr = LoginUserUtil.getLoginUser().getId();
                 AssertUtil.isLessEqualZero(userIdStr, "Not Login");
-                long userId = NumberUtils.toLong(userIdStr);
-                Optional<UserDO> user = userDAO.findById(userId);
-                AssertUtil.isTrue(user != null && user.get() != null, "Invalid User");
-                userDO = user.get();
-                AssertUtil.isLessEqualZero(userDO.getCnt(), ResultCode.USER_CNT_NOT_ENOUGH.getDesc());
-
-                AssertUtil.isTrue(userDO.getCnt() >= boxModel.getCnt(), ResultCode.USER_CNT_NOT_ENOUGH.getDesc());
-                boxModel.setUserId(userId);
-                boxModel.setGmtCreate(new Date());
-                boxModel.setGmtModify(new Date());
+                userId = NumberUtils.toLong(userIdStr);
             }
 
             @Override
             public void doLock() {
-                userDO = userDAO.lockById(userDO.getId());
+                userDO = userDAO.lockById(userId);
             }
 
             @Override
             public void process() {
-                userDAO.updateCntById(userDO.getId(), userDO.getCnt() - boxModel.getCnt());
+                AssertUtil.isTrue(userDO != null, "Invalid User");
+                AssertUtil.isTrue(userDO.getCnt() >= boxModel.getCnt(), ResultCode.USER_CNT_NOT_ENOUGH.getDesc());
 
+                boxModel.setUserId(userDO.getId());
+                boxModel.setGmtCreate(new Date());
+                boxModel.setGmtModify(new Date());
+
+                //
+                //更新数据
+                //
+                //1.user-cnt数量
+                userDAO.updateCntById(userDO.getId(), userDO.getCnt() - boxModel.getCnt());
+                //2.添加box
                 BoxDO boxDO = new BoxDO();
                 BeanUtils.copyProperties(boxModel, boxDO);
                 boxDAO.save(boxDO);

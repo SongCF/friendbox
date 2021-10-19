@@ -1,7 +1,7 @@
 package com.scys.friendbox.dal.enums;
 
 /**
- *
+ * 用户性别
  */
 public enum UserGenderEnum {
     MALE(1, "男"),

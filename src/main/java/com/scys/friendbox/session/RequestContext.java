@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author dx
- * @version : RequestContext.java, v 0.1 2021年10月11日 4:05 下午 dx Exp $
+ * http请求上下文
  */
 public class RequestContext {
     private String              appName;

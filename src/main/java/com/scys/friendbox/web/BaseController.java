@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author dx
- * @version : BaseController.java, v 0.1 2021年10月10日 9:49 下午 dx Exp $
+ * 基础controller
  */
 @RestController
 public class BaseController {

@@ -14,17 +14,7 @@ CREATE TABLE IF NOT EXISTS fb_user (
     id BIGINT NOT NULL AUTO_INCREMENT  COMMENT '唯一标识' ,
     gmt_create DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
     gmt_modify DATETIME DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT '更新时间' ,
-    name VARCHAR(32) NOT NULL   COMMENT '姓名' ,
-    gender INT NOT NULL   COMMENT '性别' ,
-    birthday DATETIME NOT NULL   COMMENT '出生日期' ,
-    height INT NOT NULL   COMMENT '身高cm' ,
-    profession VARCHAR(32)    COMMENT '职业' ,
-    city VARCHAR(32)    COMMENT '城市' ,
-    salary INT    COMMENT '年薪' ,
-    住房、车辆、学历、身高
-    chat_number VARCHAR(32)  COMMENT '联系方式' ,
-    dsc VARCHAR(1024)    COMMENT '描述' ,
-    pictures VARCHAR(1024)    COMMENT '照片地址jsonObject' ,
+    user_info VARCHAR(5000) COMMENT '盲盒信息' ,
     cnt INT DEFAULT 0   COMMENT '可用的抽取次数' ,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

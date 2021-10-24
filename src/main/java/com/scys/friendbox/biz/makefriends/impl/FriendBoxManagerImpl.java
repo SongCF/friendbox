@@ -2,11 +2,12 @@ package com.scys.friendbox.biz.makefriends.impl;
 
 import com.scys.friendbox.biz.makefriends.FriendBoxManager;
 import com.scys.friendbox.biz.makefriends.model.BoxModel;
+import com.scys.friendbox.biz.makefriends.model.UserInfo;
 import com.scys.friendbox.dal.datainterface.BoxDAO;
 import com.scys.friendbox.dal.datainterface.UserDAO;
 import com.scys.friendbox.dal.dataobject.BoxDO;
 import com.scys.friendbox.dal.dataobject.UserDO;
-import com.scys.friendbox.dal.enums.UserGenderEnum;
+import com.scys.friendbox.biz.makefriends.enums.GenderEnum;
 import com.scys.friendbox.dal.params.BoxQuery;
 import com.scys.friendbox.utils.context.LoginUserUtil;
 import com.scys.friendbox.utils.error.Result;
@@ -55,14 +56,23 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
             public void checkParams() {
                 //检查参数
                 AssertUtil.isLessEqualZero(boxModel.getCnt(), "无效的次数");
-                AssertUtil.notBlank(boxModel.getName(), "无效的昵称");
-                AssertUtil.isTrue(boxModel.getBirthday() != null
-                        && boxModel.getBirthday().after(MIN_DATE)
-                        && boxModel.getBirthday().before(MAX_DATE), "无效的出生日期");
-                AssertUtil.isTrue(UserGenderEnum.getByCode(boxModel.getGender()) != null, "无效的性别");
-                AssertUtil.notBlank(boxModel.getChatNumber(), "无效的联系方式");
-                AssertUtil.notBlank(boxModel.getCity(), "无效的地址");
-                AssertUtil.notBlank(boxModel.getDsc(), "无效的个人描述信息");
+                UserInfo userInfo = boxModel.getUserInfo();
+                AssertUtil.notNull(userInfo, "无效的用户信息");
+
+                AssertUtil.notBlank(userInfo.getName(), "无效的昵称");
+                AssertUtil.isTrue(GenderEnum.getByCode(userInfo.getGender()) != null, "无效的性别");
+                AssertUtil.notBlank(userInfo.getCity(), "无效的地址");
+                AssertUtil.isTrue(userInfo.getBirthday() != null
+                        && userInfo.getBirthday().after(MIN_DATE)
+                        && userInfo.getBirthday().before(MAX_DATE), "无效的出生日期");
+                AssertUtil.isTrue(userInfo.getHeight() > 100 && userInfo.getHeight() < 300, "无效的身高");
+                AssertUtil.isTrue(userInfo.getWeight() > 30 && userInfo.getHeight() < 200, "无效的体重");
+//                AssertUtil.notBlank(userInfo.getProfession(), "无效的职业");
+//                AssertUtil.isTrue(SalaryEnum.getByCode(userInfo.getSalary()) != null, "无效的年薪");
+//                AssertUtil.isTrue(HouseAndCarEnum.getByCode(userInfo.getHouseAndCar()) != null, "无效的车房情况");
+//                AssertUtil.isTrue(EducationEnum.getByCode(userInfo.getEducation()) != null, "无效的学历");
+                AssertUtil.notBlank(userInfo.getChatNum(), "无效的联系方式");
+                AssertUtil.notBlank(userInfo.getDsc(), "无效的个人描述信息");
 
                 //检查用户信息
                 String userIdStr = LoginUserUtil.getLoginUser().getId();
@@ -79,17 +89,15 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
             public void process() {
                 AssertUtil.isTrue(userDO != null, "Invalid User");
                 AssertUtil.isTrue(userDO.getCnt() >= boxModel.getCnt(), ResultCode.USER_CNT_NOT_ENOUGH.getDesc());
-
-                boxModel.setUserId(userDO.getId());
-                boxModel.setGmtCreate(new Date());
-                boxModel.setGmtModify(new Date());
-
                 //
                 //更新数据
                 //
                 //1.user-cnt数量
                 userDAO.updateCntById(userDO.getId(), userDO.getCnt() - boxModel.getCnt());
                 //2.添加box
+                boxModel.setUserId(userDO.getId());
+                boxModel.setGmtCreate(new Date());
+                boxModel.setGmtModify(new Date());
                 BoxDO boxDO = new BoxDO();
                 BeanUtils.copyProperties(boxModel, boxDO);
                 boxDAO.save(boxDO);
@@ -101,7 +109,25 @@ public class FriendBoxManagerImpl implements FriendBoxManager {
 
     @Override
     public Result<BoxModel> openOneBox(BoxQuery boxQuery) {
-        return null;
+        Result<BoxModel> result = new Result<>();
+
+        transTemplate.execute(result, new BizEventBO(), new HandleCallback() {
+
+            @Override
+            public void checkParams() {
+            }
+
+            @Override
+            public void doLock() {
+            }
+
+            @Override
+            public void process() {
+
+            }
+        });
+
+        return result;
     }
 
     @Override

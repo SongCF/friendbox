@@ -1,5 +1,6 @@
 package com.scys.friendbox.dal.dataobject;
 
+import com.scys.friendbox.biz.makefriends.model.UserInfo;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -26,32 +27,8 @@ public class UserDO {
     @Column(name = "gmt_modify")
     private Date gmtModify;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "birthday", nullable = false)
-    private Date birthday;
-
-    @Column(name = "gender", nullable = false)
-    private Integer gender;
-
-    @Column(name = "chat_number")
-    private String chatNumber;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "profession")
-    private String profession;
-
-    @Column(name = "salary")
-    private Integer salary;
-
-    @Column(name = "dsc")
-    private String dsc;
-
-    @Column(name = "pictures")
-    private String pictures;
+    @Column(name = "user_info")
+    private UserInfo userInfo;
 
     @Column(name = "cnt")
     private Integer cnt;

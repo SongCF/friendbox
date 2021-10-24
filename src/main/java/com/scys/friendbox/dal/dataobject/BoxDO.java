@@ -32,35 +32,7 @@ public class BoxDO {
     @Column(name = "cnt", nullable = false)
     private Integer cnt;
 
-    @Column(name = "weight", nullable = false)
-    private Integer weight;
-
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "birthday", nullable = false)
-    private Date birthday;
-
-    @Column(name = "gender", nullable = false)
-    private Integer gender;
-
-    @Column(name = "chat_number")
-    private String chatNumber;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "profession")
-    private String profession;
-
-    @Column(name = "salary")
-    private Integer salary;
-
-    @Column(name = "dsc")
-    private String dsc;
-
-    @Column(name = "pictures")
-    private String pictures;
+    @Column(name = "box_data", nullable = false)
+    private String boxData;
 
 }

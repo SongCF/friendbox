@@ -15,12 +15,14 @@ CREATE TABLE IF NOT EXISTS fb_user (
     gmt_create DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
     gmt_modify DATETIME DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT '更新时间' ,
     name VARCHAR(32) NOT NULL   COMMENT '姓名' ,
-    birthday DATETIME NOT NULL   COMMENT '出生日期' ,
     gender INT NOT NULL   COMMENT '性别' ,
-    chat_number VARCHAR(32)  COMMENT '联系方式' ,
-    city VARCHAR(32)    COMMENT '城市' ,
+    birthday DATETIME NOT NULL   COMMENT '出生日期' ,
+    height INT NOT NULL   COMMENT '身高cm' ,
     profession VARCHAR(32)    COMMENT '职业' ,
+    city VARCHAR(32)    COMMENT '城市' ,
     salary INT    COMMENT '年薪' ,
+    住房、车辆、学历、身高
+    chat_number VARCHAR(32)  COMMENT '联系方式' ,
     dsc VARCHAR(1024)    COMMENT '描述' ,
     pictures VARCHAR(1024)    COMMENT '照片地址jsonObject' ,
     cnt INT DEFAULT 0   COMMENT '可用的抽取次数' ,
@@ -45,18 +47,7 @@ CREATE TABLE IF NOT EXISTS fb_box (
     gmt_modify DATETIME DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT '更新时间' ,
     user_id BIGINT NOT NULL  COMMENT '用户id' ,
     cnt INT NOT NULL  COMMENT '计数' ,
-    weight INT NOT NULL  COMMENT '排序权重' ,
-
-    name VARCHAR(32) NOT NULL   COMMENT '姓名' ,
-    birthday DATETIME NOT NULL   COMMENT '出生日期' ,
-    gender INT NOT NULL   COMMENT '性别' ,
-    chat_number VARCHAR(32)  COMMENT '联系方式' ,
-    city VARCHAR(32)    COMMENT '城市' ,
-    profession VARCHAR(32)    COMMENT '职业' ,
-    salary INT    COMMENT '年薪' ,
-    dsc VARCHAR(1024)    COMMENT '描述' ,
-    pictures VARCHAR(1024)    COMMENT '照片地址jsonObject' ,
-
+    box_data VARCHAR(5000) COMMENT '盲盒信息' ,
     PRIMARY KEY (id),
     KEY `idx_userid` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='盲盒表';
